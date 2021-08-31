@@ -71,8 +71,7 @@ class _QuizPageState extends State<QuizPage> {
                   //The user picked true.
                   setState(() {
                     scorekeeper.checkResponse(
-                        answer: quizBrain.getQuestionAnswer(),
-                        response: true);
+                        answer: quizBrain.getQuestionAnswer(), response: true);
                     quizBrain.nextQuestion();
                   });
                 },
@@ -95,8 +94,7 @@ class _QuizPageState extends State<QuizPage> {
                   //The user picked false.
                   setState(() {
                     scorekeeper.checkResponse(
-                        answer: quizBrain.getQuestionAnswer(),
-                        response: false);
+                        answer: quizBrain.getQuestionAnswer(), response: false);
                     quizBrain.nextQuestion();
                   });
                 },
