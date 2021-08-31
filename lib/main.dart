@@ -130,22 +130,3 @@ class _QuizPageState extends State<QuizPage> {
     return result;
   }
 }
-
-class Check extends StatelessWidget {
-  const Check({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {}
-}
-
-class Cross extends StatelessWidget {
-  const Cross({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Icon(
-      Icons.close,
-      color: Colors.red,
-    );
-  }
-}
