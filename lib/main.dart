@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'quiz_brain.dart';
+import 'scorekeeper.dart';
 
 QuizBrain quizBrain = QuizBrain();
+Scorekeeper scorekeeper = Scorekeeper();
 
 void main() => runApp(Quizzler());
 
@@ -28,29 +30,10 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  List<Icon> scoreKeeper = [];
-
-  void addAnswerToScoreKeeper(bool buttonClicked) {
-    Icon icon;
-    bool answer = quizBrain.getQuestionAnswer();
-    if (buttonClicked == answer) {
-      icon = Icon(
-        Icons.check,
-        color: Colors.green,
-      );
-    } else {
-      icon = Icon(
-        Icons.close,
-        color: Colors.red,
-      );
-    }
-    scoreKeeper.add(icon);
-  }
-
   @override
   Widget build(BuildContext context) {
     Widget result;
-    if(quizBrain.questionsRemaining){
+    if (quizBrain.questionsRemaining) {
       result = Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -87,7 +70,9 @@ class _QuizPageState extends State<QuizPage> {
                 onPressed: () {
                   //The user picked true.
                   setState(() {
-                    addAnswerToScoreKeeper(true);
+                    scorekeeper.addResult(
+                        answer: quizBrain.getQuestionAnswer(),
+                        response: true);
                     quizBrain.nextQuestion();
                   });
                 },
@@ -109,23 +94,22 @@ class _QuizPageState extends State<QuizPage> {
                 onPressed: () {
                   //The user picked false.
                   setState(() {
-                    addAnswerToScoreKeeper(false);
+                    scorekeeper.addResult(
+                        answer: quizBrain.getQuestionAnswer(),
+                        response: false);
                     quizBrain.nextQuestion();
                   });
-
                 },
               ),
             ),
           ),
           Row(
-            children: scoreKeeper,
+            children: scorekeeper.scoreWidgets,
           ),
         ],
       );
     } else {
-      result = Center(
-        child: Text("You are finished!")
-      );
+      result = Center(child: Text("You are finished!"));
     }
     return result;
   }
