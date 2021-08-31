@@ -70,7 +70,7 @@ class _QuizPageState extends State<QuizPage> {
                 onPressed: () {
                   //The user picked true.
                   setState(() {
-                    scorekeeper.addResult(
+                    scorekeeper.checkResponse(
                         answer: quizBrain.getQuestionAnswer(),
                         response: true);
                     quizBrain.nextQuestion();
@@ -94,7 +94,7 @@ class _QuizPageState extends State<QuizPage> {
                 onPressed: () {
                   //The user picked false.
                   setState(() {
-                    scorekeeper.addResult(
+                    scorekeeper.checkResponse(
                         answer: quizBrain.getQuestionAnswer(),
                         response: false);
                     quizBrain.nextQuestion();
