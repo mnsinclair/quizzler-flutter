@@ -107,7 +107,23 @@ class _QuizPageState extends State<QuizPage> {
         ],
       );
     } else {
-      result = Center(child: Text("You are finished!"));
+      result = Center(
+        child: Card(
+          child: Container(
+            child: Center(
+              child: Text(
+                "You finished the quiz.",
+                style: TextStyle(
+                  fontSize: 30,
+                ),
+              ),
+            ),
+            width: 300,
+            height: 150,
+            padding: EdgeInsets.all(30),
+          ),
+        ),
+      );
     }
     return result;
   }
