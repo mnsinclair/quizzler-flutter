@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'question.dart';
+import 'quiz_brain.dart';
+
+QuizBrain quizBrain = QuizBrain();
 
 void main() => runApp(Quizzler());
 
@@ -27,16 +29,11 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   List<Icon> scoreKeeper = [];
-  List<Question> questions = [
-    Question(q: 'You can lead a cow down stairs but not up stairs.', a: false),
-    Question(q: 'Approximately one quarter of human bones are in the feet.', a: true),
-    Question(q: 'A slug\'s blood is green.', a: true),
-  ];
-  int questionIndex = 0;
 
-  void addAnswerToScoreKeeper({Question question, bool buttonClicked}) {
+  void addAnswerToScoreKeeper(bool buttonClicked) {
     Icon icon;
-    if (buttonClicked == question.answer) {
+    bool answer = quizBrain.getQuestionAnswer();
+    if (buttonClicked == answer) {
       icon = Icon(
         Icons.check,
         color: Colors.green,
@@ -53,7 +50,7 @@ class _QuizPageState extends State<QuizPage> {
   @override
   Widget build(BuildContext context) {
     Widget result;
-    if(0 <= questionIndex && questionIndex < questions.length){
+    if(quizBrain.questionsRemaining){
       result = Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -64,7 +61,7 @@ class _QuizPageState extends State<QuizPage> {
               padding: EdgeInsets.all(10.0),
               child: Center(
                 child: Text(
-                  questions[questionIndex].text,
+                  quizBrain.getQuestionText(),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 25.0,
@@ -90,8 +87,8 @@ class _QuizPageState extends State<QuizPage> {
                 onPressed: () {
                   //The user picked true.
                   setState(() {
-                    addAnswerToScoreKeeper(question: questions[questionIndex], buttonClicked: true);
-                    questionIndex++;
+                    addAnswerToScoreKeeper(true);
+                    quizBrain.nextQuestion();
                   });
                 },
               ),
@@ -112,8 +109,8 @@ class _QuizPageState extends State<QuizPage> {
                 onPressed: () {
                   //The user picked false.
                   setState(() {
-                    addAnswerToScoreKeeper(question: questions[questionIndex], buttonClicked: false);
-                    questionIndex++;
+                    addAnswerToScoreKeeper(false);
+                    quizBrain.nextQuestion();
                   });
 
                 },
